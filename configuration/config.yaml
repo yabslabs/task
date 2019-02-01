@@ -1,0 +1,14 @@
+MinioConfig:
+  Endpoint: "play.minio.io:9000"
+  AccessKeyID: "Q3AM3UQ867SPQQA43P2F"
+  SecretAccessKey: "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"
+  UseSSL: true
+
+BucketConfig:
+  BucketName: "hodor-test"
+  Location: "us-east-1"
+
+FileConfig:
+  ObjectName: "test.txt.zip"
+  FilePath: "storage/tmp/test.txt.zip"
+  ContentType: "application/zip"
