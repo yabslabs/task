@@ -4,9 +4,9 @@ import (
 	"git.workshop21.ch/go/abraxas/configuration/yaml"
 )
 
-type Config struct {
+type StorageConfig struct {
 	MinioConfig  *MinioConfig
-	BucketConfig *BucketConfig
+	GoogleConfig *GoogleConfig
 	FileConfig   *FileConfig
 }
 
@@ -15,11 +15,13 @@ type MinioConfig struct {
 	AccessKeyID     string
 	SecretAccessKey string
 	UseSSL          bool
-}
-
-type BucketConfig struct {
 	BucketName string
 	Location   string
+}
+
+type GoogleConfig stuct {
+	ProjectID string
+	BucketName string
 }
 
 type FileConfig struct {
@@ -28,8 +30,8 @@ type FileConfig struct {
 	ContentType string
 }
 
-func ReadConfig() (*Config, error) {
-	config := &Config{}
+func ReadConfig() (*StorageConfig, error) {
+	config := &StorageConfig{}
 	err := yaml.ReadConfig(config,
 		"./configuration/config.yaml",
 	)

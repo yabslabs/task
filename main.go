@@ -13,10 +13,10 @@ func main() {
 		log.Fatalf("Could not read config: %v", err)
 	}
 
-	storage := storage.NewClient(config.MinioConfig)
+	storage := google.NewClient(config.GoogleConfig)
 	err = storage.CreateBucketIfNotExisting(config.BucketConfig)
 	if err == nil {
 		storage.UploadFileToBucket(config.BucketConfig, config.FileConfig)
-		storage.DownloadFileFromBucket(config.BucketConfig, config.FileConfig)
+		// storage.DownloadFileFromBucket(config.BucketConfig, config.FileConfig)
 	}
 }
