@@ -14,6 +14,9 @@ func main() {
 	}
 
 	storage := storage.NewClient(config.MinioConfig)
-	storage.CreateBucketIfNotExisting(config.BucketConfig)
-	storage.UploadFileToBucket(config.BucketConfig, config.FileConfig)
+	err = storage.CreateBucketIfNotExisting(config.BucketConfig)
+	if err == nil {
+		storage.UploadFileToBucket(config.BucketConfig, config.FileConfig)
+		storage.DownloadFileFromBucket(config.BucketConfig, config.FileConfig)
+	}
 }
