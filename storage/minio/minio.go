@@ -5,13 +5,14 @@ import (
 
 	"github.com/minio/minio-go"
 	"github.com/yabslabs/task/configuration"
+	"github.com/yabslabs/task/storage"
 )
 
 type MinioStorage struct {
 	Client *minio.Client
 }
 
-func NewClient(storageConfig *configuration.MinioConfig) (Storage, error) {
+func NewClient(storageConfig *configuration.MinioConfig) (storage.Storage, error) {
 	minioClient, err := minio.New(storageConfig.Endpoint, storageConfig.AccessKeyID, storageConfig.SecretAccessKey, true)
 	if err != nil {
 		log.Printf("Could not create minio client: %v", err)
@@ -24,7 +25,7 @@ func NewClient(storageConfig *configuration.MinioConfig) (Storage, error) {
 }
 
 func (s *MinioStorage) CreateBucketIfNotExisting(config *configuration.StorageConfig) error {
-	err := s.Client.MakeBucket(config.MinioConfig.BuckerName, config.MinioConfig.Location)
+	err := s.Client.MakeBucket(config.MinioConfig.BucketName, config.MinioConfig.Location)
 	if err != nil {
 		// Check to see if we already own this bucket (which happens if you run this twice)
 		exists, err := s.Client.BucketExists(config.MinioConfig.BucketName)

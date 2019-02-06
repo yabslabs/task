@@ -13,10 +13,13 @@ func main() {
 		log.Fatalf("Could not read config: %v", err)
 	}
 
-	storage := minio.NewClient(config.MinioConfig)
-	err = storage.CreateBucketIfNotExisting(config.BucketConfig)
+	storage, err := minio.NewClient(config.MinioConfig)
+	if err != nil {
+		log.Fatalf("Could not create storage client: %v", err)
+	}
+	err = storage.CreateBucketIfNotExisting(config)
 	if err == nil {
-		storage.UploadFileToBucket(config.BucketConfig, config.FileConfig)
-		storage.DownloadFileFromBucket(config.BucketConfig, config.FileConfig)
+		storage.UploadFileToBucket(config)
+		storage.DownloadFileFromBucket(config)
 	}
 }
