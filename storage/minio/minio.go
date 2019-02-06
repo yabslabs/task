@@ -1,6 +1,7 @@
 package minio
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/minio/minio-go"
@@ -40,6 +41,38 @@ func (s *MinioStorage) CreateBucketIfNotExisting(config *configuration.StorageCo
 		log.Printf("Successfully created %s\n", config.MinioConfig.BucketName)
 		return nil
 	}
+}
+
+func (s *MinioStorage) ListBuckets(config *configuration.StorageConfig) ([]storage.BucketInfo, error) {
+	buckets, err := s.Client.ListBuckets()
+	if err != nil {
+		log.Printf("Error reading buckets, %v", err)
+		return nil, err
+	}
+	bucketList := make([]storage.BucketInfo, 0)
+	for _, bucket := range buckets {
+		bucketList = append(bucketList, storage.BucketInfo{Name: bucket.Name, CreationDate: bucket.CreationDate})
+	}
+	return bucketList, err
+}
+
+func (s *MinioStorage) ListBucketObjects(config *configuration.StorageConfig) ([]storage.ObjectInfo, error) {
+	doneCh := make(chan struct{})
+
+	defer close(doneCh)
+
+	isRecursive := true
+	objectList := make([]storage.ObjectInfo, 0)
+	objectCh := s.Client.ListObjectsV2(config.MinioConfig.BucketName, "", isRecursive, doneCh)
+	for object := range objectCh {
+		if object.Err != nil {
+			log.Printf("Could not read objects of a bucket %v", object.Err)
+			return nil, object.Err
+		}
+		fmt.Println(object)
+		objectList = append(objectList, storage.ObjectInfo{Name: object.Key, LastModified: object.LastModified, ContentType: object.ContentType, Size: object.Size})
+	}
+	return objectList, nil
 }
 
 func (s *MinioStorage) UploadFileToBucket(config *configuration.StorageConfig) error {
