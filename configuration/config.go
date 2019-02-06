@@ -15,12 +15,12 @@ type MinioConfig struct {
 	AccessKeyID     string
 	SecretAccessKey string
 	UseSSL          bool
-	BucketName string
-	Location   string
+	BucketName      string
+	Location        string
 }
 
-type GoogleConfig stuct {
-	ProjectID string
+type GoogleConfig struct {
+	ProjectID  string
 	BucketName string
 }
 
