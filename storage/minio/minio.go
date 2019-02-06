@@ -75,7 +75,7 @@ func (s *MinioStorage) ListBucketObjects(config *configuration.StorageConfig) ([
 	return objectList, nil
 }
 
-func (s *MinioStorage) UploadFileToBucket(config *configuration.StorageConfig) error {
+func (s *MinioStorage) UploadObjectToBucket(config *configuration.StorageConfig) error {
 	// Upload the zip file with FPutObject
 	n, err := s.Client.FPutObject(config.MinioConfig.BucketName, config.FileConfig.ObjectName, config.FileConfig.FilePath, minio.PutObjectOptions{ContentType: config.FileConfig.ContentType})
 	if err != nil {
@@ -87,7 +87,7 @@ func (s *MinioStorage) UploadFileToBucket(config *configuration.StorageConfig) e
 	return nil
 }
 
-func (s *MinioStorage) DownloadFileFromBucket(config *configuration.StorageConfig) error {
+func (s *MinioStorage) GetObjectFromBucket(config *configuration.StorageConfig) error {
 	// Upload the zip file with FPutObject
 	err := s.Client.FGetObject(config.MinioConfig.BucketName, config.FileConfig.ObjectName, "storage/tmp/downloads/"+config.FileConfig.ObjectName, minio.GetObjectOptions{})
 	if err != nil {

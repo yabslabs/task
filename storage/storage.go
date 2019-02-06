@@ -10,8 +10,8 @@ type Storage interface {
 	ListBuckets(*configuration.StorageConfig) ([]BucketInfo, error)
 	CreateBucketIfNotExisting(*configuration.StorageConfig) error
 	ListBucketObjects(*configuration.StorageConfig) ([]ObjectInfo, error)
-	UploadFileToBucket(*configuration.StorageConfig) error
-	DownloadFileFromBucket(*configuration.StorageConfig) error
+	UploadObjectToBucket(*configuration.StorageConfig) error
+	GetObjectFromBucket(*configuration.StorageConfig) error
 }
 
 type BucketInfo struct {
