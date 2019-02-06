@@ -55,7 +55,10 @@ require (
 	golang.org/x/oauth2 v0.0.0-20190130055435-99b60b757ec1 // indirect
 	golang.org/x/perf v0.0.0-20190124201629-844a5f5b46f4 // indirect
 	golang.org/x/sys v0.0.0-20190204203706-41f3e6584952 // indirect
+<<<<<<< HEAD
 	golang.org/x/text v0.3.1-0.20180807135948-17ff2d5776d2
+=======
+>>>>>>> 7b3218254716c750887b631db760596b25cd0d86
 	golang.org/x/tools v0.0.0-20190206041539-40960b6deb8e // indirect
 	google.golang.org/genproto v0.0.0-20190201180003-4b09977fb922 // indirect
 	google.golang.org/grpc v1.18.0 // indirect
