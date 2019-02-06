@@ -4,7 +4,7 @@ import (
 	"log"
 
 	config "github.com/yabslabs/task/configuration"
-	"github.com/yabslabs/task/storage"
+	"github.com/yabslabs/task/storage/minio"
 )
 
 func main() {
@@ -13,10 +13,10 @@ func main() {
 		log.Fatalf("Could not read config: %v", err)
 	}
 
-	storage := google.NewClient(config.GoogleConfig)
+	storage := minio.NewClient(config.MinioConfig)
 	err = storage.CreateBucketIfNotExisting(config.BucketConfig)
 	if err == nil {
 		storage.UploadFileToBucket(config.BucketConfig, config.FileConfig)
-		// storage.DownloadFileFromBucket(config.BucketConfig, config.FileConfig)
+		storage.DownloadFileFromBucket(config.BucketConfig, config.FileConfig)
 	}
 }
